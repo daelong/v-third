@@ -2,7 +2,7 @@
     <div name="Exam6Modal" class="modal-back" v-if="state.visible">
         <div class="modal">
             <div class="modal-top">
-                <div>name : {{state.item.name}}</div>
+                <div>{{state.item.name}}</div>
                 <button @click="changeVisible()">x</button>
             </div>
             <div class="modal-body">
@@ -72,10 +72,16 @@ export default {
     flex-direction:column;
 }
 .modal-top{
-    padding-bottom: 5px;
+    padding: 0 10px 5px 20px;
     display:flex;
     flex-direction: row;
     justify-content: space-between;
     border-bottom: 1px solid black;
+}
+.modal-body{
+    padding: 20px 0 0 20px;
+}
+.modal-body div {
+    padding-top: 10px;
 }
 </style>

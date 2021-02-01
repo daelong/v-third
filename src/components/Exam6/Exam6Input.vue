@@ -84,12 +84,11 @@ export default {
         onMounted(() => {
             state.visible = props.visible;
         })
-
         const changeVisible = () => {
             state.visible = !state.visible;
             emit('close', state.visible);
         }
-        const submit = () =>{
+        const submit = () => {
             if(state.formValues.name && state.formValues.brewery_type ){
                 state.visible = !state.visible;
                 emit('submit', state.formValues, state.visible);
@@ -138,6 +137,7 @@ export default {
 .modal-body{
     display: flex;
     flex-direction: row;
+    padding-top: 10px;
 }
 .modal-body-name{
     padding-left: 20px;
@@ -146,6 +146,9 @@ export default {
 .modal-top{
     display: flex;
     justify-content: flex-end;
+}
+.modal-top button{
+    margin-right: 10px;
 }
 .btn{
     width: 70%;

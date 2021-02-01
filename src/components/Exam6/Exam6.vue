@@ -97,8 +97,9 @@ export default {
                         return 0;
                     }
             })),
-          indexedItem: computed(() => state.sortData.map((item, index) => ({ ...item, index })))
+          indexedItem: computed(() => state.sortData.map((item, index) => ({ ...item, index }))),
        })
+
        onMounted(() => {
            fetchData();
        })
@@ -117,11 +118,11 @@ export default {
             }
        }
 
-       const onModalItem = (item) =>{
+       const onModalItem = (item) => {
             state.selectedItem = item;
             state.visible = !state.visible;
        }
-       const offModalItem = (modalVisible) =>{
+       const offModalItem = (modalVisible) => {
            state.visible = modalVisible;
        }
         const onAddInput = () => {
@@ -134,7 +135,7 @@ export default {
         const closeInput = (addVisible) => {
           state.addVisible = addVisible;
         }
-        const onSortData = (key) =>{
+        const onSortData = (key) => {
         if(state.sortBy !== key){
           state.sortBy = key;
           state.orderBy = 'up';
@@ -145,6 +146,7 @@ export default {
             state.sortBy = null;
           }
         }
+
        return{
            state,
            onModalItem,
@@ -168,7 +170,7 @@ table{
   }
 
   .row.odd {
-    background: #eee;
+    background: #c7ecee;
   }
 
   .row td {
@@ -177,7 +179,7 @@ table{
   }
 
   .row:hover {
-    background: #eee;
+    background: #c7ecee;
   }
   .up:after{
         content:" \2191";
