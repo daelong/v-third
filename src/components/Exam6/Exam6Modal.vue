@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import country from '@/assets/scripts/country';
 import { onMounted, reactive } from 'vue';
 
 export default {
@@ -29,7 +28,6 @@ export default {
     },
     setup(props, {emit}){
         const state = reactive({
-            countrys: country,
             item: {},
             visible: Boolean,
         })
@@ -43,7 +41,7 @@ export default {
         }
         return{
             state,
-            changeVisible
+            changeVisible,
         }
     }
 }

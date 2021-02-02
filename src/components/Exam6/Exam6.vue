@@ -19,18 +19,19 @@
               v-for="item in state.indexedItem"
               :key="item.id"
               class="row"
-              @click="onModalItem(item)"
             >
-              <td>{{ item.index + 1 }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.brewery_type }}</td>
-              <td>{{ item.country }}</td>
-              <td><a href="">{{ item.website_url }}</a></td>
+              <td @click="onModalItem(item)">{{ item.index + 1 }}</td>
+              <td @click="onModalItem(item)">{{ item.name }}</td>
+              <td @click="onModalItem(item)">{{ item.brewery_type }}</td>
+              <td @click="onModalItem(item)">{{ item.country }}</td>
+              <td @click="onModalItem(item)"><a :href="item.website_url">{{ item.website_url }}</a></td>
+              <div><button class="" @click="onUpdateItem(item, item.index)">Edit</button></div>
             </tr>
           </tbody>
         </table>
         <exam-6-modal v-if="state.visible" :item="state.selectedItem"  :visible="state.visible" @changeVisible="offModalItem"/>
         <exam-6-input v-if="state.addVisible" :visible="state.addVisible" @submit="addItem" @close="closeInput"/>
+        <exam-6-update v-if="state.updateVisible" :item="state.selectedItem" :visible="state.updateVisible" :index="state.updateIndex" @close="closeUpdate" @submit="updateItemComplete"/>
     </div>
 </template>
 
@@ -39,12 +40,14 @@ import API from '@/assets/scripts/api';
 import { reactive, onMounted, computed } from 'vue';
 import Exam6Modal from './Exam6Modal.vue';
 import Exam6Input from './Exam6Input.vue';
+import Exam6Update from './Exam6Update.vue';
 
 export default {
     name:"Exam6",
     components:{
         Exam6Modal,
         Exam6Input,
+        Exam6Update
     },
    setup(){
        const state = reactive({
@@ -70,6 +73,8 @@ export default {
            selectedItem: {},
            visible: false,
            addVisible: false,
+           updateVisible: false,
+           updateIndex: 0,
            sortBy: null,
            orderBy: null,
            sortData: computed(() => state.items.slice().sort((a, b) => {
@@ -130,7 +135,8 @@ export default {
         }
         const addItem = (item, addVisible) => {
           state.addVisible = addVisible;
-          state.items.push(item);
+          item.index = state.indexedItem.length;
+          state.indexedItem.push(item);
         }
         const closeInput = (addVisible) => {
           state.addVisible = addVisible;
@@ -141,12 +147,25 @@ export default {
           state.orderBy = 'up';
         }else if(state.orderBy === 'up'){
             state.orderBy = 'down';
-          }else if(state.orderBy === 'down'){
-            state.orderBy = null;
-            state.sortBy = null;
-          }
+        }else if(state.orderBy === 'down'){
+          state.orderBy = null;
+          state.sortBy = null;
         }
-
+        }
+        const onUpdateItem = (item, updateIndex) => {
+          state.updateIndex = updateIndex;
+          state.updateVisible = !state.updateVisible;
+          state.selectedItem = item;
+        }
+        const closeUpdate = (updateVisible) => {
+          state.updateVisible = updateVisible;
+        }
+        const updateItemComplete = (updateItem, updateIndex, updateVisible) => {
+          console.log(updateItem);
+          console.log(updateIndex);
+          state.indexedItem.splice( updateIndex, 1, updateItem);
+          state.updateVisible = updateVisible;
+        }
        return{
            state,
            onModalItem,
@@ -154,7 +173,10 @@ export default {
            onAddInput,
            addItem,
            onSortData,
-           closeInput
+           closeInput,
+           onUpdateItem,
+           closeUpdate,
+           updateItemComplete
        }
    }
 }
@@ -186,5 +208,8 @@ table{
     }
   .down:after{
       content:" \2193";
+  }
+  tr div{
+    padding-top: 7px;
   }
 </style>

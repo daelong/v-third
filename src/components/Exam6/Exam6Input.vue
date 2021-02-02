@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="btn">
-                <button @click="submit()">제출</button>
+                <button @click="submit()">complete</button>
             </div>
         </div>
     </div>
